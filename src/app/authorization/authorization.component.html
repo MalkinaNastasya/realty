@@ -1,0 +1,15 @@
+<div class="container">
+<h2>Авторизация</h2>
+
+  <div class="d-flex justify-content-center">
+    <button [routerLink]="['/login-owner']" type="button" class="btn btn-realty btn-lg mt-3 mb-3">Войти как владелец недвижимости</button>
+  </div>
+    <div class="d-flex justify-content-center">
+    <button [routerLink]="['/login-realtor']" type="button" class="btn btn-realty btn-lg mt-3 mb-3">Войти как риелтор</button>
+  </div>
+      <div class="d-flex justify-content-center">
+    <button [routerLink]="['/login-customer']" type="button" class="btn btn-realty btn-lg mt-3 mb-3">Войти как покупатель</button>
+  </div>
+
+  <p>Нет аккаунта? <a class="" [routerLink]="['/registration']">Зарегистрируйтесь!</a> </p>
+</div>
