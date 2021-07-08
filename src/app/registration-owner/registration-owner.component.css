@@ -1,8 +1,11 @@
-.container {
+.flex {
   height: 75vh;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  margin: 0 auto;
+
 }
 
 .form-login {
@@ -31,16 +34,15 @@
   display: block;
 }
 
-
 .btn-realty {
-    background-color: rgb(102, 153, 255) !important;
-    color: white;
+  background-color: rgb(102, 153, 255) !important;
+  color: white;
 }
 
 .btn-realty:hover {
-    color: #fff;
-    background-color: rgb(51, 102, 255) !important;
-    border-color:rgb(51, 102, 255);
+  color: #fff;
+  background-color: rgb(51, 102, 255) !important;
+  border-color:rgb(51, 102, 255);
 }
 
 .btn-realty:focus {
@@ -48,11 +50,16 @@
 }
 
 
-h2 {
-  color: rgb(102, 153, 255) !important; 
-  text-align: center;
+input:hover, input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(102, 153, 255, 0.418) !important;
+  outline: none !important;
+  border: 1px solid rgb(102, 153, 255) !important; 
 }
 
-p {
-  text-align: center;
+input {
+  border: 1px solid rgb(102, 153, 255) !important; 
+}
+
+h4 {
+  color: rgb(102, 153, 255) !important; 
 }

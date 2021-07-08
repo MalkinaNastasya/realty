@@ -1,10 +1,14 @@
-<img src="assets/banner.jpg" alt="banner" class="d-block w-100 mb-5">
 
 <div class="container">
-  <h2 class="m-5">О нашем сервисе</h2>
+  <h2 class="mt-5 mb-3">О нас</h2>
   <p>Приветствуем вас на информационном портале в сфере недвижимости Realty!</p>
   <p>Realty – уникальный ресурс, собравший в себя всю информацию о недвижимости и ценах на нее.</p>
-  <p>Наш портал полезен как обычным покупателям, так и активным игрокам рынка – риэлторам, владельцам недвижимости. Мы предлагаем посетителям массу возможностей, вы можете:</p>
+  <p>Наш портал полезен как обычным покупателям, так и активным игрокам рынка – риэлторам, владельцам недвижимости.</p>
+</div>
+<img src="assets/banner.jpg" alt="banner" class="d-block w-100 mb-5">
+<div class="container">
+  <h3>С сервисом Realty Вы можете:</h3>
+  <br>
   <div class="card-deck">
       <div class="card">
         <div class="card-body">
@@ -31,14 +35,22 @@
           </div>
       </div>
   </div>
-
+  <br>
     <div class="d-flex justify-content-center">
       <button [routerLink]="['/catalog']" type="button" class="btn btn-realty btn-lg mt-3 mb-3">Перейти в каталог услуг</button>
     </div>
 
     <h2 class="center m-5">ТОП-5 риелторских агенств</h2>
     <div class="row justify-content-center">
-      <p>Сделать вывод агенств пяти первых агенств, чей рейтинг = 5</p>
+      <div class="mb-3 ">
+        <div class="card mb-4 shadow-sm" *ngFor="let agency of agencies">
+          <div class="card-body">
+            <p class="card-text h5" >{{agency.name}}</p>
+            <p class="card-text h5 font-weight-normal text-success">Рейтинг: {{agency.rating}} / 5</p>
+            <p class="card-text h5 font-weight-normal">Год основания: {{agency.year_foundation}} </p>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- <div class="card-deck">
         <div class="card">

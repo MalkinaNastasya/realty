@@ -51,7 +51,7 @@ export class LoginRealtorComponent implements OnInit {
         let ExistOrNot = await this.api.post(JSON.stringify(infoAboutUser), "/login-realtor");
         this.form.reset();  
         if (ExistOrNot != "not exist") {
-          this.realtor.id = ExistOrNot[0].id;
+          this.realtor.id = ExistOrNot[0].id_realtor;
           this.realtor.name = ExistOrNot[0].name;
           this.realtor.rating = ExistOrNot[0].email; 
           this.realtor.login = ExistOrNot[0].login; 

@@ -52,7 +52,7 @@ export class LoginCustomerComponent implements OnInit {
         let ExistOrNot = await this.api.post(JSON.stringify(infoAboutUser), "/login-customer");
         this.form.reset();  
         if (ExistOrNot != "not exist") {
-          this.customer.id = ExistOrNot[0].id;
+          this.customer.id = ExistOrNot[0].id_customer;
           this.customer.name = ExistOrNot[0].name;
           this.customer.phone = ExistOrNot[0].phone;
           this.customer.email = ExistOrNot[0].email; 

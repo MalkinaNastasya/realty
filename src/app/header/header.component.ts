@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
   // Логическая переменная, авторизирован пользователь или нет
   logOut = true;
   name = "";
   role = "";
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Хук жизненного цикла по изменению
   // Проверяет наличие в LocalStorage элемента роли, чтобы понять авторизирован пользователь или нет
@@ -23,14 +22,20 @@ export class HeaderComponent implements OnInit {
     this.role = "";
     if (localStorage.getItem("role") !== null) {
       if (localStorage.getItem("role") == "owner") {
-        this.role = "Владелец"
+        this.role = "Владелец";
       } else {
         if (localStorage.getItem("role") == "realtor") {
-          this.role = "Риелтор"
+          this.role = "Риелтор";
         } else {
           if (localStorage.getItem("role") == "customer") {
-            this.role = "Покупатель"
+            this.role = "Покупатель";
           }
+        }
+        if (localStorage.getItem("role") == "customer") {
+          this.role = "Покупатель";
+        }
+        if (localStorage.getItem("role") == "admin") {
+          this.role = "Администратор";
         }
       }
       this.name = localStorage.getItem("name");
@@ -44,7 +49,6 @@ export class HeaderComponent implements OnInit {
   onLogOut() {
     this.logOut = true;
     localStorage.clear();
-    this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
-
 }

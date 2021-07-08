@@ -22,6 +22,9 @@ import { LoginOwnerComponent } from './login-owner/login-owner.component';
 import { LoginRealtorComponent } from './login-realtor/login-realtor.component';
 import { LoginCustomerComponent } from './login-customer/login-customer.component';
 import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { RegistrationCustomerComponent } from './registration-customer/registration-customer.component';
+import { RegistrationOwnerComponent } from './registration-owner/registration-owner.component';
+import { RegistrationRealtorComponent } from './registration-realtor/registration-realtor.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { LoginAdminComponent } from './login-admin/login-admin.component';
     LoginRealtorComponent,
     LoginCustomerComponent,
     LoginAdminComponent,
+    RegistrationCustomerComponent,
+    RegistrationOwnerComponent,
+    RegistrationRealtorComponent,
   ],
   imports: [
     BrowserModule,

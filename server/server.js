@@ -154,12 +154,35 @@ app.post("/api/login-customer", (req, res) => {
     });
 })
 
-// Регистрация пользователя
-app.post("/api/registration", (req, res) => {
+//Обработка входа администратора
+app.post("/api/login-admin", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для входа:');
+  console.log(req.body);
+  connection.query(`SELECT * FROM admins WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+    function (err, results) {
+      if (err) {
+        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        console.log(err);
+      }
+      console.log('Результаты проверки существования пользователя:');
+      if (results !== undefined) {
+        // console.log(results[0]);
+        if (results[0] === undefined) {
+          res.json("not exist");
+        } else {
+          res.json(results);
+        }
+      }
+    });
+})
+
+// Регистрация владельца недвижимости
+app.post("/api/registrationOwner", (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log('Пришёл POST запрос для пользователей:');
   console.log(req.body);
-  connection.query(`SELECT * FROM users WHERE login='${req.body.login}'`, function (error, results) {
+  connection.query(`SELECT * FROM owner WHERE login='${req.body.login}'`, function (error, results) {
     if (error) {
       res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
       console.log(error);
@@ -167,11 +190,11 @@ app.post("/api/registration", (req, res) => {
     console.log('Результаты проверки существования логина:');
     console.log(results[0]);
     if (results[0] === undefined) {
-      connection.query('INSERT INTO `users` (`id`, `login`, `password`, `name`, `role`) VALUES (NULL, ?, ?, ?, ?)',
-        [req.body.login, req.body.password, req.body.name, req.body.role],
+      connection.query('INSERT INTO `owner` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)',
+        [req.body.name, req.body.phone, req.body.email, req.body.login, req.body.password],
         function () {
           console.log('Запрос на проверку существования созданной записи в БД');
-          connection.query(`SELECT * FROM users WHERE login="${req.body.login}"`,
+          connection.query(`SELECT * FROM owner WHERE login="${req.body.login}"`,
             function (err, result) {
               if (err) {
                 res.status(500).send('Ошибка сервера при получении пользователя по логину')
@@ -188,6 +211,89 @@ app.post("/api/registration", (req, res) => {
   });
 })
 
+// Регистрация покупатель
+app.post("/api/registrationCustomer", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для пользователей:');
+  console.log(req.body);
+  connection.query(`SELECT * FROM customer WHERE login='${req.body.login}'`, function (error, results) {
+    if (error) {
+      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
+      console.log(error);
+    }
+    console.log('Результаты проверки существования логина:');
+    console.log(results[0]);
+    if (results[0] === undefined) {
+      connection.query('INSERT INTO `customer` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)',
+        [req.body.name, req.body.phone, req.body.email, req.body.login, req.body.password],
+        function () {
+          console.log('Запрос на проверку существования созданной записи в БД');
+          connection.query(
+            `SELECT * FROM customer WHERE login="${req.body.login}"`,
+            function (err, result) {
+              if (err) {
+                res
+                  .status(500)
+                  .send("Ошибка сервера при получении пользователя по логину");
+                console.log(err);
+              } else {
+                console.log(result);
+                res.json(result);
+              }
+            }
+          );
+        })
+    } else {
+      res.json("exist");
+    }
+  });
+})
+
+// Регистрация риэлтора
+app.post("/api/registrationRealtor", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для пользователей:');
+  console.log(req.body);
+  connection.query(`SELECT * FROM realtors WHERE login='${req.body.login}'`, function (error, results) {
+    if (error) {
+      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
+      console.log(error);
+    }
+    console.log('Результаты проверки существования логина:');
+    console.log(results[0]);
+    if (results[0] === undefined) {
+      connection.query(
+        "INSERT INTO `realtors` (`name`, `phone`, `id_agency`, `login`, `password`) VALUES (?, ?, ?, ?, ?)",
+        [
+          req.body.name,
+          req.body.phone,
+          req.body.id_agency,
+          req.body.login,
+          req.body.password,
+        ],
+        function () {
+          console.log("Запрос на проверку существования созданной записи в БД");
+          connection.query(
+            `SELECT * FROM realtors WHERE login="${req.body.login}"`,
+            function (err, result) {
+              if (err) {
+                res
+                  .status(500)
+                  .send("Ошибка сервера при получении пользователя по логину");
+                console.log(err);
+              } else {
+                console.log(result);
+                res.json(result);
+              }
+            }
+          );
+        }
+      );
+    } else {
+      res.json("exist");
+    }
+  });
+})
 
 
 // Получение файла и загрузка его в папку uploads
@@ -222,9 +328,308 @@ app.get("/api/photo/:filename", (req, res) => {
   res.sendFile(path.join(__dirname, "uploads", req.params.filename))
 })
 
+// Получение риэлторских агенств, чей рейтинг = 5
+app.get('/api/getAgencyFive', function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `agency_realtors` WHERE rating=5 LIMIT 5",
+      function (error, results) {
+        if (error) {
+          res.status(500).send("Ошибка сервера при получении агенств");
+          console.log(error);
+        }
+        console.log("Результаты получения агенств");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
 
+// Добавление заявки на покупку (покупатель)
+app.post("/api/addRequestPurchase", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания заявки на покупку:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO request_purchase (status, id_customer, id_realty) VALUES (?, ?, ?);`,
+    [
+      req.body.status,
+      req.body.id_customer,
+      req.body.id_realty
+    ],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании заявки");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
 
+//Обработка получения списка заявок на покупку
+app.get("/api/getRequestsPurchase", function (req, res) {
+  try {
+    connection.query("SELECT * FROM `requests`", function (error, results) {
+      if (error) {
+        res.status(500).send("Ошибка сервера при получении заявок на покупку");
+        console.log(error);
+      }
+      console.log("Результаты получения заявок на покупку");
+      console.log(results);
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
+// Добавление заявки на риэлторские услуги (владелец)
+app.post("/api/addContractService", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания заявки на услуги:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO contract_services (title, id_owner, id_service, id_realtor) VALUES (?, ?, ?, ?);`,
+    [
+      req.body.title,
+      req.body.id_owner,
+      req.body.id_service,
+      req.body.id_realtor
+    ],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании заявки");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+//Обработка получения списка заявок на риэлторские услуги
+app.get("/api/getContractService", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `contract_services`",
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении заявок на покупку");
+          console.log(error);
+        }
+        console.log("Результаты получения заявок на покупку");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Добавление недвижимости (владелец)
+app.post("/api/addRealty", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания услуги риэлтора:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO realty (image, address, price, id_type_realty, id_owner) VALUES (?, ?, ?, ?,?);`,
+    [
+      req.body.image,
+      req.body.address,
+      req.body.price,
+      req.body.id_type_realty,
+      req.body.id_owner
+    ],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании услуги риэлтора");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+//Обработка получения списка недвижимости (всего)
+app.get("/api/getRealty", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `realty`",
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении заявок на покупку");
+          console.log(error);
+        }
+        console.log("Результаты получения заявок на покупку");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Получение списка недвижимости по владельцу
+app.post("/api/getOwnerRealty", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл POST запрос для загрузки мастера:');
+  console.log(req.body);
+  try {
+    connection.query(
+      "SELECT * FROM realty WHERE id_owner=?;",
+      [req.body.id_owner],
+      function (err, results) {
+        if (err) {
+          res.status(500).send("Ошибка сервера при поиске мастера по id ");
+          console.log(err);
+        }
+        console.log("Мастер найден успешно");
+        console.log("Результаты:");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+// Удаление недвижимости (владелец)
+app.delete("/api/deleteRealty/:id_realty", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл DELETE запрос для удаления недвижимости по id:");
+  console.log(req.body);
+  connection.query(
+    `DELETE FROM realty WHERE id_realty=${req.params.id_realty}`,
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при удалении недвижимости по id");
+        console.log(err);
+      }
+      console.log("Удаление прошло успешно");
+      res.json("delete");
+    }
+  );
+});
+
+// Добавление риелторской услуги (риэлтор)
+app.post("/api/addRealtorService", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания услуги риэлтора:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO realtor_services (title, id_realtor) VALUES (?, ?);`,
+    [req.body.title, req.body.id_realtor],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании услуги риэлтора");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+//Обработка получения списка риэлторских услуг (всего)
+app.get("/api/getRealtorService", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `realtor_services`",
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении заявок на покупку");
+          console.log(error);
+        }
+        console.log("Результаты получения заявок на покупку");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//Обработка получения списка риэлторских услуг (по риэлтору)
+app.post("/api/getOneRealtorService", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для загрузки мастера:");
+  console.log(req.body);
+  try {
+    connection.query(
+      "SELECT * FROM realtor_services WHERE id_realtor=?;",
+      [req.body.id_realtor],
+      function (err, results) {
+        if (err) {
+          res.status(500).send("Ошибка сервера при поиске мастера по id ");
+          console.log(err);
+        }
+        console.log("Мастер найден успешно");
+        console.log("Результаты:");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Добавление риэлторского агентства (админ)
+app.post("/api/addAgencyRealtors", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания риэлторского агенства:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO agency_realtors (name, rating, year_foundation) VALUES (?, ?, ?);`,
+    [req.body.name, req.body.rating, req.body.year_foundation],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании агенства");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+//Обработка получения списка риэлторских агентств
+app.get("/api/getAgencyRealtors", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `agency_realtors`",
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении списка риэлторских агентств");
+          console.log(error);
+        }
+        console.log("Результаты получения заявок на покупку");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 if(process.env.NODE_ENV === 'production'){
   // Информирование о запуске сервера и его порте

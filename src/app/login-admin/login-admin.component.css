@@ -1,0 +1,66 @@
+.flex {
+  height: 75vh;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+}
+
+.form-login {
+  display: block;
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.form-login input {
+  padding: 10px !important;
+  height: 46px;
+}
+
+.attention {
+  text-align: left !important;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.attention span {
+  margin-top: -15px;
+  display: block;
+}
+
+
+.btn-realty {
+    background-color: rgb(102, 153, 255) !important;
+    color: white;
+}
+
+.btn-realty:hover {
+    color: #fff;
+    background-color: rgb(51, 102, 255) !important;
+    border-color:rgb(51, 102, 255);
+}
+
+.btn-realty:focus {
+    box-shadow: 0 0 0 0.2rem rgba(102, 153, 255, 0.418);
+}
+
+
+input:hover, input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(102, 153, 255, 0.418) !important;
+  outline: none !important;
+  border: 1px solid rgb(102, 153, 255) !important; 
+}
+
+input {
+  border: 1px solid rgb(102, 153, 255) !important; 
+}
+
+h3 {
+  color: rgb(102, 153, 255) !important; 
+}

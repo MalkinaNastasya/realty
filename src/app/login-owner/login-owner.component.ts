@@ -51,7 +51,7 @@ export class LoginOwnerComponent implements OnInit {
         let ExistOrNot = await this.api.post(JSON.stringify(infoAboutUser), "/login-owner");
         this.form.reset();  
         if (ExistOrNot != "not exist") {
-          this.owner.id = ExistOrNot[0].id;
+          this.owner.id = ExistOrNot[0].id_owner;
           this.owner.name = ExistOrNot[0].name;
           this.owner.phone = ExistOrNot[0].phone;
           this.owner.email = ExistOrNot[0].email; 
