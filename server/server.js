@@ -2,22 +2,24 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 const dbConfig = require("./db.config.js");
-const fileUpload =  require("express-fileupload");
+const fileUpload = require("express-fileupload");
 const path = require("path");
 const uniqueFilename = require("unique-filename");
-const serveStatic = require('serve-static')
+const serveStatic = require("serve-static");
 const history = require("connect-history-api-fallback");
 const app = express();
 const port = process.env.PORT || 8085;
 // Загрузка файлов
-app.use(fileUpload({
-  createParentPath: true
-}));
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
 // Парсинг json
 app.use(bodyParser.json());
 
-app.use(history())
+app.use(history());
 
 // Обработка статических файлов
 app.use("/", serveStatic(path.join(__dirname, "../dist/project")));
@@ -45,24 +47,24 @@ app.use(function (req, res, next) {
 
 // Создание соединения с базой данных
 let connection;
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   connection = mysql.createPool({
     host: dbConfig.PROD.HOST,
     user: dbConfig.PROD.USER,
     password: dbConfig.PROD.PASSWORD,
     database: dbConfig.PROD.DB,
-    charset: 'utf8_general_ci',
-    connectionLimit: 10
+    charset: "utf8_general_ci",
+    connectionLimit: 10,
   });
 } else {
-connection = mysql.createPool({
-  host: dbConfig.HOST,
-  user: dbConfig.USER,
-  password: dbConfig.PASSWORD,
-  database: dbConfig.DB,
-  charset: 'utf8_general_ci',
-  connectionLimit: 10
-});
+  connection = mysql.createPool({
+    host: dbConfig.HOST,
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    database: dbConfig.DB,
+    charset: "utf8_general_ci",
+    connectionLimit: 10,
+  });
 }
 
 connection.getConnection((err, connect) => {
@@ -88,15 +90,18 @@ connection.getConnection((err, connect) => {
 //Обработка входа владельца недвижимости
 app.post("/api/login-owner", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для входа:');
+  console.log("Пришёл POST запрос для входа:");
   console.log(req.body);
-  connection.query(`SELECT * FROM owner WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+  connection.query(
+    `SELECT * FROM owner WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
     function (err, results) {
       if (err) {
-        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        res
+          .status(500)
+          .send("Ошибка сервера при получении пользователя по логину");
         console.log(err);
       }
-      console.log('Результаты проверки существования пользователя:');
+      console.log("Результаты проверки существования пользователя:");
       if (results !== undefined) {
         // console.log(results[0]);
         if (results[0] === undefined) {
@@ -105,21 +110,25 @@ app.post("/api/login-owner", (req, res) => {
           res.json(results);
         }
       }
-    });
-})
+    }
+  );
+});
 
 //Обработка входа риелтора
 app.post("/api/login-realtor", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для входа:');
+  console.log("Пришёл POST запрос для входа:");
   console.log(req.body);
-  connection.query(`SELECT * FROM realtors WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+  connection.query(
+    `SELECT * FROM realtors WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
     function (err, results) {
       if (err) {
-        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        res
+          .status(500)
+          .send("Ошибка сервера при получении пользователя по логину");
         console.log(err);
       }
-      console.log('Результаты проверки существования пользователя:');
+      console.log("Результаты проверки существования пользователя:");
       if (results !== undefined) {
         // console.log(results[0]);
         if (results[0] === undefined) {
@@ -128,21 +137,25 @@ app.post("/api/login-realtor", (req, res) => {
           res.json(results);
         }
       }
-    });
-})
+    }
+  );
+});
 
 //Обработка входа покупателя
 app.post("/api/login-customer", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для входа:');
+  console.log("Пришёл POST запрос для входа:");
   console.log(req.body);
-  connection.query(`SELECT * FROM customer WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+  connection.query(
+    `SELECT * FROM customer WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
     function (err, results) {
       if (err) {
-        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        res
+          .status(500)
+          .send("Ошибка сервера при получении пользователя по логину");
         console.log(err);
       }
-      console.log('Результаты проверки существования пользователя:');
+      console.log("Результаты проверки существования пользователя:");
       if (results !== undefined) {
         // console.log(results[0]);
         if (results[0] === undefined) {
@@ -151,21 +164,25 @@ app.post("/api/login-customer", (req, res) => {
           res.json(results);
         }
       }
-    });
-})
+    }
+  );
+});
 
 //Обработка входа администратора
 app.post("/api/login-admin", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для входа:');
+  console.log("Пришёл POST запрос для входа:");
   console.log(req.body);
-  connection.query(`SELECT * FROM admins WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
+  connection.query(
+    `SELECT * FROM admins WHERE (login="${req.body.login}") AND (password="${req.body.password}")`,
     function (err, results) {
       if (err) {
-        res.status(500).send('Ошибка сервера при получении пользователя по логину')
+        res
+          .status(500)
+          .send("Ошибка сервера при получении пользователя по логину");
         console.log(err);
       }
-      console.log('Результаты проверки существования пользователя:');
+      console.log("Результаты проверки существования пользователя:");
       if (results !== undefined) {
         // console.log(results[0]);
         if (results[0] === undefined) {
@@ -174,148 +191,201 @@ app.post("/api/login-admin", (req, res) => {
           res.json(results);
         }
       }
-    });
-})
+    }
+  );
+});
 
 // Регистрация владельца недвижимости
 app.post("/api/registrationOwner", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для пользователей:');
+  console.log("Пришёл POST запрос для пользователей:");
   console.log(req.body);
-  connection.query(`SELECT * FROM owner WHERE login='${req.body.login}'`, function (error, results) {
-    if (error) {
-      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
-      console.log(error);
-    }
-    console.log('Результаты проверки существования логина:');
-    console.log(results[0]);
-    if (results[0] === undefined) {
-      connection.query('INSERT INTO `owner` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)',
-        [req.body.name, req.body.phone, req.body.email, req.body.login, req.body.password],
-        function () {
-          console.log('Запрос на проверку существования созданной записи в БД');
-          connection.query(`SELECT * FROM owner WHERE login="${req.body.login}"`,
-            function (err, result) {
-              if (err) {
-                res.status(500).send('Ошибка сервера при получении пользователя по логину')
-                console.log(err);
-              } else {
-                console.log(result);
-                res.json(result);
+  connection.query(
+    `SELECT * FROM owner WHERE login='${req.body.login}'`,
+    function (error, results) {
+      if (error) {
+        res
+          .status(500)
+          .send(
+            "Ошибка сервера при получении пользователей с таким же логином"
+          );
+        console.log(error);
+      }
+      console.log("Результаты проверки существования логина:");
+      console.log(results[0]);
+      if (results[0] === undefined) {
+        connection.query(
+          "INSERT INTO `owner` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)",
+          [
+            req.body.name,
+            req.body.phone,
+            req.body.email,
+            req.body.login,
+            req.body.password,
+          ],
+          function () {
+            console.log(
+              "Запрос на проверку существования созданной записи в БД"
+            );
+            connection.query(
+              `SELECT * FROM owner WHERE login="${req.body.login}"`,
+              function (err, result) {
+                if (err) {
+                  res
+                    .status(500)
+                    .send(
+                      "Ошибка сервера при получении пользователя по логину"
+                    );
+                  console.log(err);
+                } else {
+                  console.log(result);
+                  res.json(result);
+                }
               }
-            });
-        })
-    } else {
-      res.json("exist");
+            );
+          }
+        );
+      } else {
+        res.json("exist");
+      }
     }
-  });
-})
+  );
+});
 
 // Регистрация покупатель
 app.post("/api/registrationCustomer", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для пользователей:');
+  console.log("Пришёл POST запрос для пользователей:");
   console.log(req.body);
-  connection.query(`SELECT * FROM customer WHERE login='${req.body.login}'`, function (error, results) {
-    if (error) {
-      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
-      console.log(error);
-    }
-    console.log('Результаты проверки существования логина:');
-    console.log(results[0]);
-    if (results[0] === undefined) {
-      connection.query('INSERT INTO `customer` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)',
-        [req.body.name, req.body.phone, req.body.email, req.body.login, req.body.password],
-        function () {
-          console.log('Запрос на проверку существования созданной записи в БД');
-          connection.query(
-            `SELECT * FROM customer WHERE login="${req.body.login}"`,
-            function (err, result) {
-              if (err) {
-                res
-                  .status(500)
-                  .send("Ошибка сервера при получении пользователя по логину");
-                console.log(err);
-              } else {
-                console.log(result);
-                res.json(result);
-              }
-            }
+  connection.query(
+    `SELECT * FROM customer WHERE login='${req.body.login}'`,
+    function (error, results) {
+      if (error) {
+        res
+          .status(500)
+          .send(
+            "Ошибка сервера при получении пользователей с таким же логином"
           );
-        })
-    } else {
-      res.json("exist");
+        console.log(error);
+      }
+      console.log("Результаты проверки существования логина:");
+      console.log(results[0]);
+      if (results[0] === undefined) {
+        connection.query(
+          "INSERT INTO `customer` (`name`, `phone`, `email`, `login`, `password`) VALUES (?, ?, ?, ?, ?)",
+          [
+            req.body.name,
+            req.body.phone,
+            req.body.email,
+            req.body.login,
+            req.body.password,
+          ],
+          function () {
+            console.log(
+              "Запрос на проверку существования созданной записи в БД"
+            );
+            connection.query(
+              `SELECT * FROM customer WHERE login="${req.body.login}"`,
+              function (err, result) {
+                if (err) {
+                  res
+                    .status(500)
+                    .send(
+                      "Ошибка сервера при получении пользователя по логину"
+                    );
+                  console.log(err);
+                } else {
+                  console.log(result);
+                  res.json(result);
+                }
+              }
+            );
+          }
+        );
+      } else {
+        res.json("exist");
+      }
     }
-  });
-})
+  );
+});
 
 // Регистрация риэлтора
 app.post("/api/registrationRealtor", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для пользователей:');
+  console.log("Пришёл POST запрос для пользователей:");
   console.log(req.body);
-  connection.query(`SELECT * FROM realtors WHERE login='${req.body.login}'`, function (error, results) {
-    if (error) {
-      res.status(500).send('Ошибка сервера при получении пользователей с таким же логином')
-      console.log(error);
-    }
-    console.log('Результаты проверки существования логина:');
-    console.log(results[0]);
-    if (results[0] === undefined) {
-      connection.query(
-        "INSERT INTO `realtors` (`name`, `phone`, `id_agency`, `login`, `password`) VALUES (?, ?, ?, ?, ?)",
-        [
-          req.body.name,
-          req.body.phone,
-          req.body.id_agency,
-          req.body.login,
-          req.body.password,
-        ],
-        function () {
-          console.log("Запрос на проверку существования созданной записи в БД");
-          connection.query(
-            `SELECT * FROM realtors WHERE login="${req.body.login}"`,
-            function (err, result) {
-              if (err) {
-                res
-                  .status(500)
-                  .send("Ошибка сервера при получении пользователя по логину");
-                console.log(err);
-              } else {
-                console.log(result);
-                res.json(result);
-              }
-            }
+  connection.query(
+    `SELECT * FROM realtors WHERE login='${req.body.login}'`,
+    function (error, results) {
+      if (error) {
+        res
+          .status(500)
+          .send(
+            "Ошибка сервера при получении пользователей с таким же логином"
           );
-        }
-      );
-    } else {
-      res.json("exist");
+        console.log(error);
+      }
+      console.log("Результаты проверки существования логина:");
+      console.log(results[0]);
+      if (results[0] === undefined) {
+        connection.query(
+          "INSERT INTO `realtors` (`name`, `phone`, `id_agency`, `login`, `password`) VALUES (?, ?, ?, ?, ?)",
+          [
+            req.body.name,
+            req.body.phone,
+            req.body.id_agency,
+            req.body.login,
+            req.body.password,
+          ],
+          function () {
+            console.log(
+              "Запрос на проверку существования созданной записи в БД"
+            );
+            connection.query(
+              `SELECT * FROM realtors WHERE login="${req.body.login}"`,
+              function (err, result) {
+                if (err) {
+                  res
+                    .status(500)
+                    .send(
+                      "Ошибка сервера при получении пользователя по логину"
+                    );
+                  console.log(err);
+                } else {
+                  console.log(result);
+                  res.json(result);
+                }
+              }
+            );
+          }
+        );
+      } else {
+        res.json("exist");
+      }
     }
-  });
-})
-
+  );
+});
 
 // Получение файла и загрузка его в папку uploads
-app.post('/upload-photo/', async (req, res) => {
-  console.log('Пришёл POST запрос для загрузки файла:');
-  console.log('Файл: ', req.files)
+app.post("/upload-photo/", async (req, res) => {
+  console.log("Пришёл POST запрос для загрузки файла:");
+  console.log("Файл: ", req.files);
   try {
-      if(!req.files) {
-          res.send({
-              status: false,
-              message: 'No file uploaded'
-          });
-      } else {
-          let photo = req.files.file0;
-          let name = uniqueFilename("")+"."+photo.name.split(".")[1]
-          photo.mv('./server/uploads/' + name);
-          res.send({
-              status: true,
-              message: 'File is uploaded',
-              filename: name
-          });
-      }
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: "No file uploaded",
+      });
+    } else {
+      let photo = req.files.file0;
+      let name = uniqueFilename("") + "." + photo.name.split(".")[1];
+      photo.mv("./server/uploads/" + name);
+      res.send({
+        status: true,
+        message: "File is uploaded",
+        filename: name,
+      });
+    }
   } catch (err) {
     console.log("Ошибка ", err);
     res.status(500).send(err);
@@ -325,11 +395,11 @@ app.post('/upload-photo/', async (req, res) => {
 //Получение полного пути файла
 app.get("/api/photo/:filename", (req, res) => {
   console.log(path.join(__dirname, "uploads", req.params.filename));
-  res.sendFile(path.join(__dirname, "uploads", req.params.filename))
-})
+  res.sendFile(path.join(__dirname, "uploads", req.params.filename));
+});
 
 // Получение риэлторских агенств, чей рейтинг = 5
-app.get('/api/getAgencyFive', function (req, res) {
+app.get("/api/getAgencyFive", function (req, res) {
   try {
     connection.query(
       "SELECT * FROM `agency_realtors` WHERE rating=5 LIMIT 5",
@@ -355,11 +425,7 @@ app.post("/api/addRequestPurchase", (req, res) => {
   console.log(req.body);
   connection.query(
     `INSERT INTO request_purchase (status, id_customer, id_realty) VALUES (?, ?, ?);`,
-    [
-      req.body.status,
-      req.body.id_customer,
-      req.body.id_realty
-    ],
+    [req.body.status, req.body.id_customer, req.body.id_realty],
     function (err) {
       if (err) {
         res.status(500).send("Ошибка сервера при cоздании заявки");
@@ -399,7 +465,7 @@ app.post("/api/addContractService", (req, res) => {
       req.body.title,
       req.body.id_owner,
       req.body.id_service,
-      req.body.id_realtor
+      req.body.id_realtor,
     ],
     function (err) {
       if (err) {
@@ -446,7 +512,7 @@ app.post("/api/addRealty", (req, res) => {
       req.body.address,
       req.body.price,
       req.body.id_type_realty,
-      req.body.id_owner
+      req.body.id_owner,
     ],
     function (err) {
       if (err) {
@@ -462,20 +528,15 @@ app.post("/api/addRealty", (req, res) => {
 //Обработка получения списка недвижимости (всего)
 app.get("/api/getRealty", function (req, res) {
   try {
-    connection.query(
-      "SELECT * FROM `realty`",
-      function (error, results) {
-        if (error) {
-          res
-            .status(500)
-            .send("Ошибка сервера при получении заявок на покупку");
-          console.log(error);
-        }
-        console.log("Результаты получения заявок на покупку");
-        console.log(results);
-        res.json(results);
+    connection.query("SELECT * FROM `realty`", function (error, results) {
+      if (error) {
+        res.status(500).send("Ошибка сервера при получении заявок на покупку");
+        console.log(error);
       }
-    );
+      console.log("Результаты получения заявок на покупку");
+      console.log(results);
+      res.json(results);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -485,12 +546,10 @@ app.get("/api/getRealty", function (req, res) {
 app.get("/api/getRealtyThree", function (req, res) {
   try {
     connection.query(
-    `SELECT * FROM realty ORDER BY id_realty DESC LIMIT 3`,
+      `SELECT * FROM realty ORDER BY id_realty DESC LIMIT 3`,
       function (error, results) {
         if (error) {
-          res
-            .status(500)
-            .send("Ошибка сервера при получении списка");
+          res.status(500).send("Ошибка сервера при получении списка");
           console.log(error);
         }
         console.log("Результаты получения списка");
@@ -506,7 +565,7 @@ app.get("/api/getRealtyThree", function (req, res) {
 // Получение списка недвижимости по владельцу
 app.post("/api/getOwnerRealty", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл POST запрос для загрузки мастера:');
+  console.log("Пришёл POST запрос для загрузки мастера:");
   console.log(req.body);
   try {
     connection.query(
@@ -526,7 +585,7 @@ app.post("/api/getOwnerRealty", (req, res) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 // Удаление недвижимости (владелец)
 app.delete("/api/deleteRealty/:id_realty", (req, res) => {
@@ -568,7 +627,7 @@ app.post("/api/addRealtorService", (req, res) => {
 // Обработка удаления риэлторской услуги
 app.delete("/api/deleteRealtorService/:id_service", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log('Пришёл DELETE запрос для удаления карточки:');
+  console.log("Пришёл DELETE запрос для удаления карточки:");
   console.log(req.body);
   connection.query(
     `DELETE FROM realtor_services WHERE id_service=${req.params.id_service}`,
@@ -581,7 +640,7 @@ app.delete("/api/deleteRealtorService/:id_service", (req, res) => {
       res.json("delete");
     }
   );
-})
+});
 
 //Обработка получения списка риэлторских услуг (всего)
 app.get("/api/getRealtorService", function (req, res) {
@@ -633,18 +692,13 @@ app.post("/api/getOneRealtorService", (req, res) => {
 //Обработка получения списка риэлторов
 app.get("/api/getRealtors", function (req, res) {
   try {
-    connection.query(
-      "SELECT * FROM `realtors`",
-      function (error, results) {
-        if (error) {
-          res
-            .status(500)
-            .send("Ошибка сервера при получении списка");
-          console.log(error);
-        }
-        res.json(results);
+    connection.query("SELECT * FROM `realtors`", function (error, results) {
+      if (error) {
+        res.status(500).send("Ошибка сервера при получении списка");
+        console.log(error);
       }
-    );
+      res.json(results);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -691,14 +745,76 @@ app.get("/api/getAgencyRealtors", function (req, res) {
   }
 });
 
-if(process.env.NODE_ENV === 'production'){
+// Обработка добавления заявки на обратный звонок
+app.post("/api/addRequestCall", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для добавления заявки на обратный звонок:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO request_call (fio, phone, status) VALUES (?, ?, ?);`,
+    [req.body.fio, req.body.phone, "принят в работу"],
+    function (err) {
+      if (err) {
+        res
+          .status(500)
+          .send("Ошибка сервера при добавлении заявки на обратный звонок");
+        console.log(err);
+      }
+      console.log("Добавление заявки прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+// Обработка обновления заявки на обратный звонок
+app.put("/api/updateRequestCall/:id_call", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для добавления заявки на обратный звонок:");
+  console.log(req.body);
+  connection.query(
+    `UPDATE request_call SET status=? WHERE id_call=?`,
+    [req.body.status, req.params.id_call],
+    function (err) {
+      if (err) {
+        res
+          .status(500)
+          .send("Ошибка сервера при добавлении заявки на обратный звонок");
+        console.log(err);
+      }
+      console.log("Добавление заявки прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+// Получение списка всех заявок на обратный звонок
+app.get("/api/getRequestCalls", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `request_call` ORDER BY id_call DESC",
+      function (error, results) {
+        if (error) {
+          res.status(500).send("Ошибка сервера при получении списка заявок");
+          console.log(error);
+        }
+        console.log("Результаты получения списка заявок на обратный звонок");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+if (process.env.NODE_ENV === "production") {
   // Информирование о запуске сервера и его порте
-  app.listen(port, '0.0.0.0', () => {
-    console.log("Сервер запущен на http://0.0.0.0:"+port);
+  app.listen(port, "0.0.0.0", () => {
+    console.log("Сервер запущен на http://0.0.0.0:" + port);
   });
 } else {
   // Информирование о запуске сервера и его порте
   app.listen(port, () => {
-    console.log("Сервер запущен на http://localhost:"+port);
+    console.log("Сервер запущен на http://localhost:" + port);
   });
 }

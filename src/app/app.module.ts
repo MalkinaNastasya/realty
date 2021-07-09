@@ -34,6 +34,11 @@ import { CatalogServiceComponent } from './catalog-service/catalog-service.compo
 import { ServiceComponent } from './service/service.component';
 import { FilterService } from "./shared/pipe/filter-service.pipe";
 import { FilterRealty } from "./shared/pipe/filter-realty.pipe";
+import { RequestCallComponent } from './request-call/request-call.component';
+import { ListCustomersComponent } from './list-customers/list-customers.component';
+import { ListRealtorsComponent } from './list-realtors/list-realtors.component';
+import { ListOwnersComponent } from './list-owners/list-owners.component';
+import { ListRequestsComponent } from './list-requests/list-requests.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +63,11 @@ import { FilterRealty } from "./shared/pipe/filter-realty.pipe";
     ServiceComponent,
     FilterService,
     FilterRealty,
+    RequestCallComponent,
+    ListCustomersComponent,
+    ListRealtorsComponent,
+    ListOwnersComponent,
+    ListRequestsComponent,
   ],
   imports: [
     BrowserModule,

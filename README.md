@@ -4,7 +4,7 @@
 http://realty.std-701.ist.mospolytech.ru/
 
 ## Ссылка на лендинг проектв на fit.mospolytech.ru:
-about-realty.std-701.ist.mospolytech.ru
+http://about-realty.std-701.ist.mospolytech.ru/
 
 ## Макет проекта в Figma: 
 
