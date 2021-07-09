@@ -1,58 +1,78 @@
-
 <div class="container">
   <h2 class="mt-5 mb-3">О нас</h2>
   <p>Приветствуем вас на информационном портале в сфере недвижимости Realty!</p>
-  <p>Realty – уникальный ресурс, собравший в себя всю информацию о недвижимости и ценах на нее.</p>
-  <p>Наш портал полезен как обычным покупателям, так и активным игрокам рынка – риэлторам, владельцам недвижимости.</p>
+  <p>
+    Realty – уникальный ресурс, собравший в себя всю информацию о недвижимости и
+    ценах на нее.
+  </p>
+  <p>
+    Наш портал полезен как обычным покупателям, так и активным игрокам рынка –
+    риэлторам, владельцам недвижимости.
+  </p>
 </div>
-<img src="assets/banner.jpg" alt="banner" class="d-block w-100 mb-5">
+<img src="assets/banner.jpg" alt="banner" class="d-block w-100 mb-5" />
 <div class="container">
   <h3>С сервисом Realty Вы можете:</h3>
-  <br>
+  <br />
   <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Размещать</h5>
-          <p class="card-text">бесплатные объявления о продаже и аренде недвижимости в Москве и других регионах</p>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Размещать</h5>
+        <p class="card-text">
+          бесплатные объявления о продаже и аренде недвижимости в Москве и
+          других регионах
+        </p>
       </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Задавать</h5>
-          <p class="card-text">вопросы и консультировать других посетителей по вопросам недвижимости;</p>
-        </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Задавать</h5>
+        <p class="card-text">
+          вопросы и консультировать других посетителей по вопросам недвижимости;
+        </p>
       </div>
-      <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Находить</h5>
-            <p class="card-text">проверенных риелторов</p>
-          </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Находить</h5>
+        <p class="card-text">проверенных риелторов</p>
       </div>
-      <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Искать</h5>
-            <p class="card-text">недвижимость в Москве по заданным критериям</p>
-          </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Искать</h5>
+        <p class="card-text">недвижимость в Москве по заданным критериям</p>
       </div>
+    </div>
   </div>
-  <br>
-    <div class="d-flex justify-content-center">
-      <button [routerLink]="['/catalog']" type="button" class="btn btn-realty btn-lg mt-3 mb-3">Перейти в каталог услуг</button>
-    </div>
+  <br />
+  <div class="d-flex justify-content-center">
+    <button
+      [routerLink]="['/catalog']"
+      type="button"
+      class="btn btn-realty btn-lg mt-3 mb-3"
+    >
+      Перейти в каталог услуг
+    </button>
+  </div>
 
-    <h2 class="center m-5">ТОП-5 риелторских агенств</h2>
-    <div class="row justify-content-center">
-      <div class="mb-3 ">
-        <div class="card mb-4 shadow-sm" *ngFor="let agency of agencies">
-          <div class="card-body">
-            <p class="card-text h5" >{{agency.name}}</p>
-            <p class="card-text h5 font-weight-normal text-success">Рейтинг: {{agency.rating}} / 5</p>
-            <p class="card-text h5 font-weight-normal">Год основания: {{agency.year_foundation}} </p>
-          </div>
+  <h2 class="center m-5">ТОП-5 риелторских агенств</h2>
+  <div class="row justify-content-center">
+    <div class="mb-3">
+      <div class="card mb-4 shadow-sm" *ngFor="let agency of agencies">
+        <div class="card-body">
+          <p class="card-text h5">{{ agency.name }}</p>
+          <p class="card-text h5 font-weight-normal text-success">
+            Рейтинг: {{ agency.rating }} / 5
+          </p>
+          <p class="card-text h5 font-weight-normal">
+            Год основания: {{ agency.year_foundation }}
+          </p>
         </div>
       </div>
     </div>
-    <!-- <div class="card-deck">
+  </div>
+  <!-- <div class="card-deck">
         <div class="card">
           <img src="assets/specialist1.jpg" class="card-img-top" alt="specialist Ann">
           <div class="card-body">
@@ -79,53 +99,23 @@
         </div>
     </div> -->
 
-    <h2 class="m-5">Последние объявляния о продаже недвижимости</h2>
+  <h2 class="m-5">Последние объявляния о продаже недвижимости</h2>
+  <div class="row justify-content-center">
     <div class="row justify-content-center">
-      <p>Сделать вывод последних трех добавленных объявлений</p>
-
-
-      <!-- <div class="card mb-3 d-flex" style="max-width: 750px;">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img src="assets/1.jpg" class="card-img" alt="card image">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">Екатерина Кулева</h5>
-              <p class="card-text">Алина, спасибо огромное за межресничку! Процветания и отличного настроения вашему коллективу!</p>
-              <p class="card-text"><small class="text-muted">25.05.2020</small></p>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="card mb-3 d-flex" style="max-width: 750px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img src="assets/2.jpg" class="card-img" alt="card image">
-        </div>
-        <div class="col-md-8">
+      <div class="mb-3">
+        <div class="card mb-4 shadow-sm" *ngFor="let realty of realties">
           <div class="card-body">
-            <h5 class="card-title">Ольга Краснова</h5>
-            <p class="card-text">Какое счастье просыпаться ещё красивее, благодаря вашей работе, вашим стараниям!</p>
-            <p class="card-text"><small class="text-muted">01.06.2020</small></p>
+            <p class="card-text h5">{{ realty.image }}</p>
+            <p class="card-text h5 font-weight-normal text-success">
+              Адрес: {{ realty.address }}
+            </p>
+            <p class="card-text h5 font-weight-normal">
+              Цена: {{ realty.price }}
+            </p>
           </div>
         </div>
       </div>
-  </div>
-  <div class="card mb-3 d-flex" style="max-width: 750px;">
-    <div class="row no-gutters">
-      <div class="col-md-4">
-        <img src="assets/3.jpg" class="card-img" alt="card image">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">Юлия Казнич</h5>
-          <p class="card-text">Очень рекоммендую данный салон!</p>
-          <p class="card-text"><small class="text-muted">10.06.2020</small></p>
-        </div>
-      </div>
     </div>
-  </div>   -->
   </div>
 </div>
 

@@ -25,6 +25,15 @@ import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { RegistrationCustomerComponent } from './registration-customer/registration-customer.component';
 import { RegistrationOwnerComponent } from './registration-owner/registration-owner.component';
 import { RegistrationRealtorComponent } from './registration-realtor/registration-realtor.component';
+import { CatalogRealtorsComponent } from './catalog-realtors/catalog-realtors.component';
+import { RealtorComponent } from './realtor/realtor.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CatalogRealtyComponent } from './catalog-realty/catalog-realty.component';
+import { RealtyComponent } from './realty/realty.component';
+import { CatalogServiceComponent } from './catalog-service/catalog-service.component';
+import { ServiceComponent } from './service/service.component';
+import { FilterService } from "./shared/pipe/filter-service.pipe";
+import { FilterRealty } from "./shared/pipe/filter-realty.pipe";
 
 @NgModule({
   declarations: [
@@ -40,6 +49,15 @@ import { RegistrationRealtorComponent } from './registration-realtor/registratio
     RegistrationCustomerComponent,
     RegistrationOwnerComponent,
     RegistrationRealtorComponent,
+    CatalogRealtorsComponent,
+    RealtorComponent,
+    ProfileComponent,
+    CatalogRealtyComponent,
+    RealtyComponent,
+    CatalogServiceComponent,
+    ServiceComponent,
+    FilterService,
+    FilterRealty,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +70,9 @@ import { RegistrationRealtorComponent } from './registration-realtor/registratio
     FormsModule,
     TooltipModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

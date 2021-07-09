@@ -1,0 +1,17 @@
+<div class="mb-3 ">
+  <div class="card mb-3 shadow-sm" *ngIf="demonstrateService">
+      <div class="card-body">
+        <p class="card-text h5" style="cursor: pointer;" (click)="onLinkService(service.id_service)">{{realtor.name}}</p>
+        <p class="card-text h5 font-weight-normal">Телефон: {{realtor.phone}}</p>
+        <p class="card-text h5 font-weight-normal">Рейтинг: {{realtor.rating}} / 5</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group" *ngIf="(!logOut) && (role=='Администратор')">
+            <button type="button" class=" btn-sm btn btn-danger" (click)="onLinkRecordRealtorService(service.id_service)">Удалить</button> 
+          </div>
+          <div class="btn-group"  *ngIf="(!logOut) && (role=='Покупатель')">
+            <button type="button" class=" btn-sm btn btn-beauty" (click)="onLinkRecordService(service.id_service)">Оставить заявку</button> 
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -481,6 +481,28 @@ app.get("/api/getRealty", function (req, res) {
   }
 });
 
+//Обработка получения трех последний объявлений о продаже недвижимости
+app.get("/api/getRealtyThree", function (req, res) {
+  try {
+    connection.query(
+    `SELECT * FROM realty ORDER BY id_realty DESC LIMIT 3`,
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении списка");
+          console.log(error);
+        }
+        console.log("Результаты получения списка");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // Получение списка недвижимости по владельцу
 app.post("/api/getOwnerRealty", (req, res) => {
   if (!req.body) return res.sendStatus(400);
@@ -524,13 +546,13 @@ app.delete("/api/deleteRealty/:id_realty", (req, res) => {
   );
 });
 
-// Добавление риелторской услуги (риэлтор)
+// Добавление риелторской услуги
 app.post("/api/addRealtorService", (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для создания услуги риэлтора:");
   console.log(req.body);
   connection.query(
-    `INSERT INTO realtor_services (title, id_realtor) VALUES (?, ?);`,
+    `INSERT INTO realtor_services (title, price, id_realtor) VALUES (?, ?, ?);`,
     [req.body.title, req.body.id_realtor],
     function (err) {
       if (err) {
@@ -542,6 +564,24 @@ app.post("/api/addRealtorService", (req, res) => {
     }
   );
 });
+
+// Обработка удаления риэлторской услуги
+app.delete("/api/deleteRealtorService/:id_service", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log('Пришёл DELETE запрос для удаления карточки:');
+  console.log(req.body);
+  connection.query(
+    `DELETE FROM realtor_services WHERE id_service=${req.params.id_service}`,
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при удалении карточки по id");
+        console.log(err);
+      }
+      console.log("Удаление прошло успешно");
+      res.json("delete");
+    }
+  );
+})
 
 //Обработка получения списка риэлторских услуг (всего)
 app.get("/api/getRealtorService", function (req, res) {
@@ -582,6 +622,26 @@ app.post("/api/getOneRealtorService", (req, res) => {
         console.log("Мастер найден успешно");
         console.log("Результаты:");
         console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//Обработка получения списка риэлторов
+app.get("/api/getRealtors", function (req, res) {
+  try {
+    connection.query(
+      "SELECT * FROM `realtors`",
+      function (error, results) {
+        if (error) {
+          res
+            .status(500)
+            .send("Ошибка сервера при получении списка");
+          console.log(error);
+        }
         res.json(results);
       }
     );

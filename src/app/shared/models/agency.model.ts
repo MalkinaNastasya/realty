@@ -1,4 +1,4 @@
-// Модель класса Мастер
+// Модель класса Агентство
 export class Agency {
   public id_agency: any;
   public name: any;
