@@ -63,7 +63,7 @@ export class LoginOwnerComponent implements OnInit {
           localStorage.setItem("id", this.owner.id);
           localStorage.setItem('name', this.owner.name);
           console.log(localStorage);
-          this.router.navigate(['/']);
+          this.router.navigate(["/profile"]);
     
         } else {
           this.notExistLoginOrPassword = false;

@@ -10,6 +10,7 @@ import { MainService } from "../shared/services/main.service";
 export class ListRealtorServiceComponent implements OnInit {
   loading = false;
   servicies: Service[] = [];
+  id_service; //?
   item: {
     id: string;
   };

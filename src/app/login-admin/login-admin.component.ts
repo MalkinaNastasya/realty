@@ -60,7 +60,7 @@ export class LoginAdminComponent implements OnInit {
           localStorage.setItem("id", this.admin.id);
           localStorage.setItem('name', this.admin.name);
           console.log(localStorage);
-          this.router.navigate(['/']);
+          this.router.navigate(['/profile']);
     
         } else {
           this.notExistLoginOrPassword = false;

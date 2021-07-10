@@ -23,6 +23,8 @@ import { AddAgencyComponent } from './add-agency/add-agency.component';
 import { ListRequestsComponent } from './list-requests/list-requests.component';
 import { ListRealtorServiceComponent } from './list-realtor-service/list-realtor-service.component';
 import { AddServiceComponent } from './add-service/add-service.component';
+import { AddRealtyComponent } from './add-realty/add-realty.component';
+import { ListRealtyComponent } from './list-realty/list-realty.component';
 
 
 const routes: Routes = [
@@ -50,10 +52,12 @@ const routes: Routes = [
   { path: "list-requests", component: ListRequestsComponent },
   { path: "list-requests/id_call", component: ListRequestsComponent },
   { path: "list-realtor-service", component: ListRealtorServiceComponent },
+  { path: "list-realty", component: ListRealtyComponent },
 
   { path: "add-customer", component: AddCustomerComponent },
   { path: "add-agency", component: AddAgencyComponent },
   { path: "add-service", component: AddServiceComponent },
+  { path: "add-realty", component: AddRealtyComponent },
 ];
 
 @NgModule({

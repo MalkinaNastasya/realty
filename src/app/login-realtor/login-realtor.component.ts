@@ -62,7 +62,7 @@ export class LoginRealtorComponent implements OnInit {
           localStorage.setItem("id", this.realtor.id);
           localStorage.setItem('name', this.realtor.name);
           console.log(localStorage);
-          this.router.navigate(['/']);
+          this.router.navigate(["/profile"]);
     
         } else {
           this.notExistLoginOrPassword = false;

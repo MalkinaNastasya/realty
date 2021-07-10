@@ -46,6 +46,8 @@ import { RequestComponent } from './request/request.component';
 import { ListRequestsComponent } from './list-requests/list-requests.component';
 import { ListRealtorServiceComponent } from './list-realtor-service/list-realtor-service.component';
 import { AddServiceComponent } from './add-service/add-service.component';
+import { ListRealtyComponent } from './list-realty/list-realty.component';
+import { AddRealtyComponent } from './add-realty/add-realty.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { AddServiceComponent } from './add-service/add-service.component';
     RequestComponent,
     ListRealtorServiceComponent,
     AddServiceComponent,
+    ListRealtyComponent,
+    AddRealtyComponent,
   ],
   imports: [
     BrowserModule,

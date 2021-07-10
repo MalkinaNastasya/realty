@@ -64,7 +64,7 @@ export class LoginCustomerComponent implements OnInit {
           localStorage.setItem("id", this.customer.id);
           localStorage.setItem('name', this.customer.name);
           console.log(localStorage);
-          this.router.navigate(['/']);
+          this.router.navigate(["/profile"]);
     
         } else {
           this.notExistLoginOrPassword = false;

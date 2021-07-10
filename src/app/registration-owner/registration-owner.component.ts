@@ -93,7 +93,7 @@ export class RegistrationOwnerComponent implements OnInit {
           localStorage.setItem("role", "owner");
           localStorage.setItem("id", this.user.id_owner);
           localStorage.setItem("name", this.user.name);
-          this.router.navigate(["/"]);
+          this.router.navigate(["/profile"]);
         } else {
           this.existLogin = false;
           console.log("Логин уже существует");

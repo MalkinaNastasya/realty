@@ -10,6 +10,7 @@ import { MainService } from '../shared/services/main.service';
 export class ListCustomersComponent implements OnInit {
   loading = false;
   id;
+  id_customer; //?
   customers: Customer[] = [];
   constructor(private mainService: MainService) {}
 

@@ -1,0 +1,9 @@
+@media print {
+  button,
+  a {
+    display: none !important;
+  }
+  .print__filter, .edit {
+    display: none !important;
+  }
+}

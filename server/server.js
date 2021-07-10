@@ -579,7 +579,7 @@ app.get("/api/getContractService", function (req, res) {
   }
 });
 
-// Добавление недвижимости (владелец)
+// Добавление недвижимости 
 app.post("/api/addRealty", (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log("Пришёл POST запрос для создания услуги риэлтора:");
@@ -649,7 +649,7 @@ app.post("/api/getOwnerRealty", (req, res) => {
   try {
     connection.query(
       "SELECT * FROM realty WHERE id_owner=?;",
-      [req.body.id_owner],
+      [req.body.id],
       function (err, results) {
         if (err) {
           res.status(500).send("Ошибка сервера при поиске мастера по id ");

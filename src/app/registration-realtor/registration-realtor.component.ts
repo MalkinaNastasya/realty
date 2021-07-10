@@ -115,7 +115,7 @@ export class RegistrationRealtorComponent implements OnInit {
           localStorage.setItem("role", "realtor");
           localStorage.setItem("id", this.user.id_realtor);
           localStorage.setItem("name", this.user.name);
-          this.router.navigate(["/"]);
+          this.router.navigate(["/profile"]);
         } else {
           this.existLogin = false;
           console.log("Логин уже существует");

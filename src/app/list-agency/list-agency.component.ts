@@ -9,6 +9,7 @@ import { MainService } from '../shared/services/main.service';
 })
 export class ListAgencyComponent implements OnInit {
   loading = false;
+  id_agency; //?
   id;
   agencies: Agency[] = [];
   constructor(private mainService: MainService) {}

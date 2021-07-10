@@ -2,7 +2,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { MainService } from "../shared/services/main.service";
 import { environment } from "../../environments/environment";
-import { Service } from "../shared/models/service.model";
 
 @Component({
   selector: "app-realtor",

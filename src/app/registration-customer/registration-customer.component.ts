@@ -94,7 +94,7 @@ export class RegistrationCustomerComponent implements OnInit {
           localStorage.setItem("role", "customer");
           localStorage.setItem("id", this.user.id_customer);
           localStorage.setItem("name", this.user.name);
-          this.router.navigate(["/"]);
+          this.router.navigate(["/profile"]);
         } else {
           this.existLogin = false;
           console.log("Логин уже существует");
