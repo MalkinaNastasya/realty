@@ -5,7 +5,6 @@
       <p
         class="card-text h5"
         style="cursor: pointer"
-        (click)="onLinkService(service.id_service)"
       >
         {{ realty.address }}
       </p>
@@ -17,7 +16,7 @@
           <button
             type="button"
             class="btn-sm btn btn-danger"
-            (click)="onLinkRecordRealtorService(service.id_service)"
+            (click)="deleteRealty(realty.id_realty)"
           >
             Удалить
           </button>

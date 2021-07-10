@@ -100,14 +100,14 @@ export class CatalogRealtyComponent implements OnInit {
   //   }
   // }
 
-  // // Удаление из локального массива товаров определенного товара по id
-  // onDeleteService(id_service) {
-  //   let index = this.services.findIndex((el) => {
-  //     return el.id_service == id_service;
-  //   });
-  //   this.services.splice(index, 1);
-  //   if (this.services.length == 0) {
-  //     this.notfound = true;
-  //   }
-  // }
+  // Удаление из локального массива товаров определенного товара по id
+  onDeleteRealty(id_realty) {
+    let index = this.realties.findIndex((el) => {
+      return el.id_realty == id_realty;
+    });
+    this.realties.splice(index, 1);
+    if (this.realties.length == 0) {
+      this.notfound = true;
+    }
+  }
 }

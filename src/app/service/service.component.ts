@@ -61,18 +61,8 @@ export class ServiceComponent implements OnInit {
     }
   }
 
-  // Функция, которая переводит на страницу карточки выбранной услуги по клику
-  onLinkService(id_service) {
-    this.router.navigate(["/services", id_service]);
-  }
-
-  // Функция, которая переводит на страницу записи на услугу
-  onLinkRecordRealtorService(id_service) {
-    this.router.navigate(["/recordRealtorService", id_service]);
-  }
-
   // Функция удаления товара из БД
-  async onDeleteRealtorService(id_service) {
+  async deleteRealtorService(id_service) {
     try {
       let result = await this.mainService.delete(
         `/deleteRealtorService/${id_service}`

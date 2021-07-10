@@ -1,0 +1,80 @@
+<div class="container">
+  <div
+    *ngIf="loading"
+    style="height: calc(100vh - 73px - 2rem)"
+    class="container d-flex justify-content-center align-content-center"
+  >
+    <div class="spinner-border txt-gray-bread m-auto" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!loading" class="container">
+    <h2 class="mb-3 mt-5">Добавление нового покупателя</h2>
+    <h5 *ngIf="succes" class="text-success alert alert-success" role="alert">
+      Аккаунт покупателя был успешно создан!
+    </h5>
+    <form [formGroup]="form" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="text"> Введите имя</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="name"
+          placeholder="Малькина Анастасия Андреевна"
+          type="text"
+          class="form-control"
+          id="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text"> Введите телефон</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="phone"
+          type="text"
+          [textMask]="{ mask: mask }"
+          placeholder="(999) 999-99-99"
+          class="form-control"
+          id="phone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text"> Введите email</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="email"
+          placeholder="email@email.ru"
+          type="email"
+          class="form-control"
+          id="email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text">Введите логин сотрудника</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="login"
+          type="text"
+          class="form-control"
+          id="login"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text">Введите пароль сотрудника</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="password"
+          type="password"
+          class="form-control"
+          id="password"
+        />
+      </div>
+      <h5 *ngIf="!isEmpty" class="text-danger alert alert-danger" role="alert">
+        Одно или несколько полей пустые!
+      </h5>
+      <button class="btn btn-success btn-block" (click)="onAdd()">
+        Добавить
+      </button>
+      <br /><br /><br /><br /><br /><br /><br />
+    </form>
+  </div>
+</div>

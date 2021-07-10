@@ -46,4 +46,13 @@ export class CatalogRealtorsComponent implements OnInit {
     }
     this.loading = false;
   }
+  onDeleteRealtor(id_realtor) {
+    let index = this.realtors.findIndex((el) => {
+      return el.id_realtor == id_realtor;
+    });
+    this.realtors.splice(index, 1);
+    if (this.realtors.length == 0) {
+      this.notfound = true;
+    }
+  }
 }

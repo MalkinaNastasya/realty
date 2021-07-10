@@ -8,21 +8,14 @@
     <span *ngIf="role == 'Покупатель'">Личный кабинет покупателя</span>
   </h2>
   <div *ngIf="role == 'Администратор'">
-    <h3 class="mb-3">Управление персоналом:</h3>
+    <h3 class="mb-3">Управление пользователями и агентствами:</h3>
     <div class="list-group">
       <button
         type="button"
         class="list-group-item list-group-item-action"
-        [routerLink]="['/list-owners']"
+        [routerLink]="['/list-agency']"
       >
-        Список владельцев недвижимости
-      </button>
-      <button
-        type="button"
-        class="list-group-item list-group-item-action"
-        [routerLink]="['/list-realtors']"
-      >
-        Список риэлторов
+        Список риэлторских агентств
       </button>
       <button
         type="button"
@@ -45,6 +38,10 @@
         Список заявок на обратный звонок
       </button>
     </div>
+
+    <br />
+
+    <h2>Дашборд</h2>
   </div>
   <div *ngIf="role == 'Владелец'">
     <h3 class="mt-3">Ваши объявления о продаже недвижимости:</h3>
@@ -79,6 +76,17 @@
       </ng-template> -->
     </div>
   </div>
-  <br />
-  <h2>Дашборд</h2>
-</div>
+
+  <div *ngIf="role == 'Риэлтор'">
+    <h3 class="mt-3">Управление услугами:</h3>
+    <div class="list-group">
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        [routerLink]="['/list-realtor-service']"
+      >
+        Список ваших риэлторских услуг
+      </button>
+    </div>
+    </div>
+  </div>

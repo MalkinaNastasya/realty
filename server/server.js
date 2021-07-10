@@ -454,6 +454,85 @@ app.get("/api/getRequestsPurchase", function (req, res) {
   }
 });
 
+//Обработка получения списка покупателей
+app.get("/api/getCustomers", function (req, res) {
+  try {
+    connection.query("SELECT * FROM `customer`", function (error, results) {
+      if (error) {
+        res.status(500).send("Ошибка сервера при получении заявок на покупку");
+        console.log(error);
+      }
+      console.log("Результаты получения заявок на покупку");
+      res.json(results);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Удаление покупателя
+app.delete("/api/deleteCustomer/:id_customer", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл DELETE запрос для удаления покупателя по id:");
+  console.log(req.body);
+  connection.query(
+    `DELETE FROM customer WHERE id_customer=${req.params.id_customer}`,
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при удалении покупателя по id");
+        console.log(err);
+      }
+      console.log("Удаление прошло успешно");
+      res.json("delete");
+    }
+  );
+});
+
+// Удаление риэлтора
+app.delete("/api/deleteRealtor/:id_realtor", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл DELETE запрос для удаления по id:");
+  console.log(req.body);
+  connection.query(
+    `DELETE FROM realtors WHERE id_realtor=${req.params.id_realtor}`,
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при удалении по id");
+        console.log(err);
+      }
+      console.log("Удаление прошло успешно");
+      res.json("delete");
+    }
+  );
+});
+
+
+// Добавление покупателя
+app.post("/api/addCustomer", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для создания аккаунта:");
+  console.log(req.body);
+  connection.query(
+    `INSERT INTO customer (name, phone, email, login, password) VALUES (?, ?, ?, ?, ?);`,
+    [
+      req.body.name,
+      req.body.phone,
+      req.body.email,
+      req.body.login,
+      req.body.password,
+    ],
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при cоздании аккаунта");
+        console.log(err);
+      }
+      console.log("Создание прошло успешно");
+      res.json("create");
+    }
+  );
+});
+
+
 // Добавление заявки на риэлторские услуги (владелец)
 app.post("/api/addContractService", (req, res) => {
   if (!req.body) return res.sendStatus(400);
@@ -612,7 +691,7 @@ app.post("/api/addRealtorService", (req, res) => {
   console.log(req.body);
   connection.query(
     `INSERT INTO realtor_services (title, price, id_realtor) VALUES (?, ?, ?);`,
-    [req.body.title, req.body.id_realtor],
+    [req.body.title, req.body.price, req.body.id_realtor],
     function (err) {
       if (err) {
         res.status(500).send("Ошибка сервера при cоздании услуги риэлтора");
@@ -667,15 +746,15 @@ app.get("/api/getRealtorService", function (req, res) {
 //Обработка получения списка риэлторских услуг (по риэлтору)
 app.post("/api/getOneRealtorService", (req, res) => {
   if (!req.body) return res.sendStatus(400);
-  console.log("Пришёл POST запрос для загрузки мастера:");
+  console.log("Пришёл POST запрос для загрузки:");
   console.log(req.body);
   try {
     connection.query(
-      "SELECT * FROM realtor_services WHERE id_realtor=?;",
-      [req.body.id_realtor],
+      "SELECT * FROM realtor_services WHERE id_realtor=?",
+      [req.body.id],
       function (err, results) {
         if (err) {
-          res.status(500).send("Ошибка сервера при поиске мастера по id ");
+          res.status(500).send("Ошибка сервера при поиске по id ");
           console.log(err);
         }
         console.log("Мастер найден успешно");
@@ -745,6 +824,24 @@ app.get("/api/getAgencyRealtors", function (req, res) {
   }
 });
 
+// Обработка удаления риэлторского агентства
+app.delete("/api/deleteAgencyRealtors/:id_agency", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл DELETE запрос для удаления:");
+  console.log(req.body);
+  connection.query(
+    `DELETE FROM agency_realtors WHERE id_agency=${req.params.id_agency}`,
+    function (err) {
+      if (err) {
+        res.status(500).send("Ошибка сервера при удалении по id");
+        console.log(err);
+      }
+      console.log("Удаление прошло успешно");
+      res.json("delete");
+    }
+  );
+});
+
 // Обработка добавления заявки на обратный звонок
 app.post("/api/addRequestCall", (req, res) => {
   if (!req.body) return res.sendStatus(400);
@@ -798,6 +895,31 @@ app.get("/api/getRequestCalls", function (req, res) {
           console.log(error);
         }
         console.log("Результаты получения списка заявок на обратный звонок");
+        console.log(results);
+        res.json(results);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Получение заявки на обратный звонок по id
+app.post("/api/getOneRequestCall", (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  console.log("Пришёл POST запрос для загрузки заявки:");
+  console.log(req.body);
+  try {
+    connection.query(
+      "SELECT * FROM request_call WHERE id_call=?;",
+      [req.body.id_call],
+      function (err, results) {
+        if (err) {
+          res.status(500).send("Ошибка сервера при поиске заявки по id ");
+          console.log(err);
+        }
+        console.log("Заяка найдена успешно");
+        console.log("Результаты:");
         console.log(results);
         res.json(results);
       }

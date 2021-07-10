@@ -99,14 +99,14 @@ export class CatalogServiceComponent implements OnInit {
   //   }
   // }
 
-  // // Удаление из локального массива товаров определенного товара по id
-  // onDeleteService(id_service) {
-  //   let index = this.services.findIndex((el) => {
-  //     return el.id_service == id_service;
-  //   });
-  //   this.services.splice(index, 1);
-  //   if (this.services.length == 0) {
-  //     this.notfound = true;
-  //   }
-  // }
+  // Удаление из локального массива товаров определенного товара по id
+  onDeleteService(id_service) {
+    let index = this.services.findIndex((el) => {
+      return el.id_service == id_service;
+    });
+    this.services.splice(index, 1);
+    if (this.services.length == 0) {
+      this.notfound = true;
+    }
+  }
 }

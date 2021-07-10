@@ -12,7 +12,7 @@
     </div>
   <div class="container mt-5" *ngIf="!loading">
       <div *ngIf="!notfound; else blockNotFound" class="row mt-3 justify-content-md-start justify-content-lg-between justify-content-center  justify-content-xl-start">
-        <app-realtor *ngFor="let realtor of realtors" [realtor]="realtor" class="col-lg-3 col-xl-3 col-md-6 col-sm-12 col-xs-12"></app-realtor>
+        <app-realtor *ngFor="let realtor of realtors" [realtor]="realtor" (del)="onDeleteRealtor(realtor.id_realtor)" class="col-lg-3 col-xl-3 col-md-6 col-sm-12 col-xs-12"></app-realtor>
       </div>
       <ng-template #blockNotFound>
         <h3 class="font-weight-normal">К сожалению, риэлторов не найдено.</h3>

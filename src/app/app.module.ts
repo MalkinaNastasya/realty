@@ -11,7 +11,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { MainComponent } from './main/main.component';
 import { TextMaskModule } from 'angular2-text-mask';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from "@angular/forms"; 
 
 
 
@@ -36,9 +36,16 @@ import { FilterService } from "./shared/pipe/filter-service.pipe";
 import { FilterRealty } from "./shared/pipe/filter-realty.pipe";
 import { RequestCallComponent } from './request-call/request-call.component';
 import { ListCustomersComponent } from './list-customers/list-customers.component';
-import { ListRealtorsComponent } from './list-realtors/list-realtors.component';
-import { ListOwnersComponent } from './list-owners/list-owners.component';
+import { ListAgencyComponent } from './list-agency/list-agency.component';
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { AddAgencyComponent } from './add-agency/add-agency.component';
+import { SortPipe } from './shared/pipe/sort-pipe.pipe';
+import { SortAbcPipe } from './shared/pipe/sort-abc.pipe';
+import { SortAbcCustomersPipe } from './shared/pipe/sort-abc-customers.pipe';
+import { RequestComponent } from './request/request.component';
 import { ListRequestsComponent } from './list-requests/list-requests.component';
+import { ListRealtorServiceComponent } from './list-realtor-service/list-realtor-service.component';
+import { AddServiceComponent } from './add-service/add-service.component';
 
 @NgModule({
   declarations: [
@@ -63,11 +70,18 @@ import { ListRequestsComponent } from './list-requests/list-requests.component';
     ServiceComponent,
     FilterService,
     FilterRealty,
+    SortPipe,
+    SortAbcPipe,
+    SortAbcCustomersPipe,
     RequestCallComponent,
     ListCustomersComponent,
-    ListRealtorsComponent,
-    ListOwnersComponent,
     ListRequestsComponent,
+    ListAgencyComponent,
+    AddCustomerComponent,
+    AddAgencyComponent,
+    RequestComponent,
+    ListRealtorServiceComponent,
+    AddServiceComponent,
   ],
   imports: [
     BrowserModule,

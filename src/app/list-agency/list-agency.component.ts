@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../shared/models/customer.model';
+import { Agency } from '../shared/models/agency.model';
 import { MainService } from '../shared/services/main.service';
 
 @Component({
-  selector: "app-list-customers",
-  templateUrl: "./list-customers.component.html",
-  styleUrls: ["./list-customers.component.css"],
+  selector: "app-list-agency",
+  templateUrl: "./list-agency.component.html",
+  styleUrls: ["./list-agency.component.css"],
 })
-export class ListCustomersComponent implements OnInit {
+export class ListAgencyComponent implements OnInit {
   loading = false;
   id;
-  customers: Customer[] = [];
+  agencies: Agency[] = [];
   constructor(private mainService: MainService) {}
 
   async ngOnInit() {
@@ -18,18 +18,16 @@ export class ListCustomersComponent implements OnInit {
     this.loading = true;
     this.id = localStorage.getItem("id");
     try {
-      let result = await this.mainService.get("/getCustomers");
+      let result = await this.mainService.get("/getAgencyRealtors");
       if (typeof result !== "undefined") {
         console.log(result);
         for (const one in result) {
-          this.customers.push(
-            new Customer(
-              result[one].id_customer,
+          this.agencies.push(
+            new Agency(
+              result[one].id_agency,
               result[one].name,
-              result[one].phone,
-              result[one].email,
-              result[one].login,
-              result[one].password
+              result[one].rating,
+              result[one].year_foundation
             )
           );
         }
@@ -40,17 +38,17 @@ export class ListCustomersComponent implements OnInit {
     this.loading = false;
   }
 
-  async onDelete(id_customer) {
+  async onDelete(id_agency) {
     try {
       let result = await this.mainService.delete(
-        `/deleteCustomer/${id_customer}`
+        `/deleteAgencyRealtors/${id_agency}`
       );
     } catch (error) {
       console.log(error);
     }
-    let index = this.customers.findIndex((el) => {
-      return el.id_customer == id_customer;
+    let index = this.agencies.findIndex((el) => {
+      return el.id_agency == id_agency;
     });
-    this.customers.splice(index, 1);
+    this.agencies.splice(index, 1);
   }
 }

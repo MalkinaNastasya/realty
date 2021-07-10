@@ -16,14 +16,14 @@ export class RealtorComponent implements OnInit {
   hide3 = true;
   demonstrateService = true;
   @Input() realtor;
+  @Output() del = new EventEmitter<number>();
   // Логические переменные, авторизирован пользователь или нет
   logOut = true;
   name = "";
   role = "";
   constructor(private router: Router, private mainService: MainService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Хук жизненного цикла по изменению
   // Проверяет наличие в LocalStorage элемента роли, чтобы понять авторизирован пользователь или нет
@@ -51,5 +51,17 @@ export class RealtorComponent implements OnInit {
       this.name = localStorage.getItem("name");
       this.logOut = false;
     }
+  }
+
+  // Функция удаления товара из БД
+  async deleteRealtor(id_realtor) {
+    try {
+      let result = await this.mainService.delete(
+        `/deleteRealtor/${id_realtor}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    this.del.emit(id_realtor);
   }
 }

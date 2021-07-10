@@ -1,0 +1,62 @@
+<div class="container">
+  <div
+    *ngIf="loading"
+    style="height: calc(100vh - 73px - 2rem)"
+    class="container d-flex justify-content-center align-content-center"
+  >
+    <div class="spinner-border txt-gray-bread m-auto" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!loading" class="container">
+    <h2 class="mb-3 mt-5">Добавление нового риэлторского агентства</h2>
+    <h5 *ngIf="succes" class="text-success alert alert-success" role="alert">
+      Агентство было успешно создан!
+    </h5>
+    <form [formGroup]="form" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="text"> Введите название</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="name"
+          placeholder="Успешное агентство"
+          type="text"
+          class="form-control"
+          id="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text"> Введите рейтинг</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="rating"
+          type="number"
+          min="0"
+          max="5"
+          minlength="1"
+          placeholder="5"
+          class="form-control"
+          id="rating"
+        />
+      </div>
+      <div class="form-group">
+        <label for="text"> Введите год основания</label>
+        <input
+          (focus)="onSucces()"
+          formControlName="year_foundation"
+          placeholder="2000"
+          type="number"
+          class="form-control"
+          id="year_foundation"
+        />
+      </div>
+      <h5 *ngIf="!isEmpty" class="text-danger alert alert-danger" role="alert">
+        Одно или несколько полей пустые!
+      </h5>
+      <button class="btn btn-success btn-block" (click)="onAdd()">
+        Добавить
+      </button>
+      <br /><br /><br /><br /><br /><br /><br />
+    </form>
+  </div>
+</div>

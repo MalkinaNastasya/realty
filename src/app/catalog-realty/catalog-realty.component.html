@@ -61,6 +61,7 @@
       <app-realty
         *ngFor="let realty of realties | filterRealty: search_realty"
         [realty]="realty"
+        (del)="onDeleteRealty(realty.id_realty)"
         class="col-lg-3 col-xl-3 col-md-6 col-sm-12 col-xs-12"
       ></app-realty>
     </div>

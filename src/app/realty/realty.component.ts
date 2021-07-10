@@ -61,25 +61,15 @@ export class RealtyComponent implements OnInit {
     }
   }
 
-  // Функция, которая переводит на страницу карточки выбранной услуги по клику
-  onLinkService(id_service) {
-    this.router.navigate(["/services", id_service]);
-  }
-
-  // Функция, которая переводит на страницу записи на услугу
-  onLinkRecordRealtorService(id_service) {
-    this.router.navigate(["/recordRealtorService", id_service]);
-  }
-
   // Функция удаления товара из БД
-  async onDeleteRealtorService(id_service) {
+  async deleteRealty(id_realty) {
     try {
       let result = await this.mainService.delete(
-        `/deleteRealtorService/${id_service}`
+        `/deleteRealty/${id_realty}`
       );
     } catch (error) {
       console.log(error);
     }
-    this.del.emit(id_service);
+    this.del.emit(id_realty);
   }
 }
